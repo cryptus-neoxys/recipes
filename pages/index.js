@@ -12,8 +12,15 @@ export default function Home() {
         <h1 className="text-6xl font-bold">
           Welcome to{" "}
           <a className="text-blue-600" href="https://nextjs.org">
-            Next.js with <span className="text-green-400">Tailwind</span> &
-            <span className="text-purple-500"> Fauna</span>
+            Next.js with{" "}
+            <a href="https://fauna.com/" className="text-green-400">
+              Tailwind
+            </a>{" "}
+            &
+            <a href="https://tailwindcss.com/" className="text-purple-500">
+              {" "}
+              Fauna
+            </a>
           </a>
         </h1>
 
