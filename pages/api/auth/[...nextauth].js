@@ -5,9 +5,8 @@ export default NextAuth({
   providers: [
     // OAuth authentication providers...
     Providers.Google({
-      clientId:
-        "818079525310-cn3jl2f3a5t4b5sh9hgbom4lo6ie6sl9.apps.googleusercontent.com",
-      clientSecret: "qxuh2vYHNKgzlpMWnqqPMPQm",
+      clientId: process.env.GOOGLE_ID,
+      clientSecret: process.env.GOOGLE_SECRET,
     }),
     // Providers.GitHub({
     //   clientId: process.env.GITHUB_CLIENT_ID,
