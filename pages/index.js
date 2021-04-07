@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import Head from "next/head";
-import Layout from "./../components/Layout/Layout";
+import { Layout } from "../components/Layout";
 import { useSession } from "next-auth/client";
 
 export default function Home() {
