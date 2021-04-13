@@ -1,7 +1,6 @@
 import React from "react";
-import { RecipeForm } from "../components/RecipeForm";
-
-import { Layout } from "./../components/Layout";
+import { RecipeForm } from "@components/RecipeForm";
+import { Layout } from "@components/Layout";
 
 export default function Home() {
   return (
