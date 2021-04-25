@@ -1,12 +1,9 @@
 import Link from "next/link";
 import Head from "next/head";
 
-import { Nav } from "./../Nav/Nav";
+import { Nav } from "./Nav";
 
-export default function Layout({
-  children,
-  title = "This is the default title",
-}) {
+export function Layout({ children, title = "This is the default title" }) {
   return (
     <>
       <Head>
