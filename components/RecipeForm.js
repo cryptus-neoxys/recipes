@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ReactTags from "react-tag-autocomplete";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
+import { Checkbox } from "@material-ui/core";
 
 export function RecipeForm({ recipe }) {
   const [ingredients, setIngredients] = useState({
@@ -8,19 +9,27 @@ export function RecipeForm({ recipe }) {
     suggestions: [],
   });
 
+  const [, rerender] = useState();
+
   const {
     register,
     handleSubmit,
     watch,
+    control,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => console.log(data);
 
-  // console.log(watch("example")); // watch input value by passing the name of it
-  // console.log(watch("exampleRequired"));
+  const onSubmit = (data) => {
+    data["ingredients"] = ingredients.tags;
+    console.log(data);
+
+    //SEND TO data to Mongo
+  };
 
   const onDelete = (i) => {
-    console.log(i);
+    let temp = ingredients.tags;
+    temp.splice(temp.indexOf(i), 1);
+    setIngredients({ suggestions: ingredients.suggestions, tags: temp });
   };
 
   const onAddition = (tag) => {
@@ -86,21 +95,32 @@ export function RecipeForm({ recipe }) {
       <br />
 
       <label>Ingredients: </label>
-      {ingredients.suggestions.length && (
-        <>
-          {ingredients.tags.reduce((acc, item) => `${acc},${item.name}`, "")}
-          <div className="w-80">
-            <ReactTags
-              suggestions={ingredients.suggestions}
-              noSuggestionsText="No matching ingredients"
-              onDelete={onDelete}
-              onAddition={onAddition}
-            />
-          </div>
-        </>
-      )}
-      {/* <input {...register("ingredients", { required: true })} />
-      {errors.ingredients && <span>Ingredients is required.</span>} */}
+
+      {/* {ingredients.tags.reduce((acc, item) => `${acc},${item.name}`, "")} */}
+      <ul>
+        {ingredients.tags.map((item, key) => {
+          return (
+            <li
+              className="cursor-pointer"
+              onClick={() => {
+                onDelete(item);
+              }}
+            >
+              {key + 1} {item.name}
+            </li>
+          );
+        })}
+      </ul>
+
+      <div className="w-80">
+        <ReactTags
+          suggestions={ingredients?.suggestions}
+          noSuggestionsText="No matching ingredients"
+          onDelete={onDelete}
+          onAddition={onAddition}
+        />
+      </div>
+
       <br />
 
       <label>Instruction</label>
