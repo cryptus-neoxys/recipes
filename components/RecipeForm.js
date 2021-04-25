@@ -88,7 +88,7 @@ export function RecipeForm({ recipe }) {
       <label>Ingredients: </label>
       {ingredients.suggestions.length && (
         <>
-          {ingredients.tags.reduce((acc, item) => `${acc} ${item.name}`, "")}
+          {ingredients.tags.reduce((acc, item) => `${acc},${item.name}`, "")}
           <div className="w-80">
             <ReactTags
               suggestions={ingredients.suggestions}
