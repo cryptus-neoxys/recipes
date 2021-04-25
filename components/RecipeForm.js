@@ -51,7 +51,7 @@ export function RecipeForm({ recipe }) {
         suggestions: suggestionsList,
         tags: [],
       });
-    } catch {
+    } catch (error) {
       console.error(error);
     }
   };
@@ -115,7 +115,11 @@ export function RecipeForm({ recipe }) {
       <div className="w-80">
         <ReactTags
           suggestions={ingredients?.suggestions}
-          noSuggestionsText="No matching ingredients"
+          noSuggestionsText={
+            ingredients?.suggestions.length !== 0
+              ? "No matching ingredients"
+              : "Ingredients Loading"
+          }
           onDelete={onDelete}
           onAddition={onAddition}
         />
