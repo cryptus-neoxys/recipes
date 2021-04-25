@@ -1,5 +1,9 @@
-import connect from "./dbConnect";
+import dbConnect from "./dbConnect";
 
-const db = connect();
+const seedDb = () => {
+  await dbConnect();
 
-console.log(db);
+  async () => {
+
+  }
+}
