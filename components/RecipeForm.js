@@ -34,17 +34,19 @@ export function RecipeForm({ recipe }) {
   };
 
   const onAddition = (tag) => {
-    setIngredients({
-      suggestions: ingredients.suggestions,
-      tags: [].concat(ingredients.tags, tag),
-    });
+    if (ingredients.tags.indexOf(tag) == -1) {
+      setIngredients({
+        suggestions: ingredients.suggestions,
+        tags: [].concat(ingredients.tags, tag),
+      });
+    }
   };
 
   const fetchIngridents = async () => {
     try {
       let data = await fetch(`/api/ingredient`, { method: "GET" });
       data = await data.json();
-      console.log(data.data);
+      // console.log(data.data);
       let suggestionsList = data.data.map((item) => {
         return { id: item["_id"], name: item["name"] };
       });
@@ -60,16 +62,18 @@ export function RecipeForm({ recipe }) {
   }, []);
 
   return (
-    <div className="10 mx-auto">
+    <div className="mx-auto 10">
       <form
-        className="max-w-xl mx-auto bg-gray-100"
-        onSubmit={handleSubmit(onSubmit)}>
+        className="max-w-xl p-4 mx-auto bg-gray-100"
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <h1 className="my-3 mb-6 text-4xl text-center">Create a new recipe!</h1>
         <div className="text-lg font-medium">
           <label className="block mx-2">
             Name <span className="text-red-700"> *</span>
           </label>
           <input
-            className="bg-gray-50 p-2 border-gray-400 rounded-md outline-none"
+            className="p-2 border-gray-400 rounded-md outline-none bg-gray-50"
             {...register("name", { required: true })}
           />
           {errors?.name}
@@ -79,7 +83,7 @@ export function RecipeForm({ recipe }) {
         <div className="text-lg font-medium">
           <label className="block mx-2">Image URL</label>
           <input
-            className="bg-gray-50 p-2 border-gray-400 rounded-md outline-none"
+            className="p-2 border-gray-400 rounded-md outline-none bg-gray-50"
             {...register("imageUrl")}
           />
           <br />
@@ -89,7 +93,7 @@ export function RecipeForm({ recipe }) {
             Prep Time <span className="text-red-700"> *</span>
           </label>
           <input
-            className="bg-gray-50 p-2 border-gray-400 rounded-md outline-none"
+            className="p-2 border-gray-400 rounded-md outline-none bg-gray-50"
             {...register("prepTime", { required: true })}
           />
           {errors?.prepTime}
@@ -101,7 +105,7 @@ export function RecipeForm({ recipe }) {
             Cook Time <span className="text-red-700"> *</span>
           </label>
           <input
-            className="bg-gray-50 p-2 border-gray-400 rounded-md outline-none"
+            className="p-2 border-gray-400 rounded-md outline-none bg-gray-50"
             {...register("cookTime", { required: true })}
           />
           {errors?.cookTime}
@@ -111,7 +115,7 @@ export function RecipeForm({ recipe }) {
         <div className="text-lg font-medium">
           <label className="block mx-2">Difficulty</label>
           <input
-            className="bg-gray-50 p-2 border-gray-400 rounded-md outline-none"
+            className="p-2 border-gray-400 rounded-md outline-none bg-gray-50"
             {...register("difficulty")}
           />
           <br />
@@ -120,7 +124,7 @@ export function RecipeForm({ recipe }) {
         <div className="text-lg font-medium">
           <label className="block mx-2">Serves</label>
           <input
-            className="bg-gray-50 p-2 border-gray-400 rounded-md outline-none"
+            className="p-2 border-gray-400 rounded-md outline-none bg-gray-50"
             {...register("serves")}
           />
           <br />
@@ -131,7 +135,7 @@ export function RecipeForm({ recipe }) {
             Description <span className="text-red-700"> *</span>
           </label>
           <textarea
-            className="bg-gray-50 w-max p-2 border-gray-400 rounded-md outline-none"
+            className="p-2 border-gray-400 rounded-md outline-none bg-gray-50 w-max"
             {...register("description", { required: true })}
           />
           {errors?.description}
@@ -139,25 +143,7 @@ export function RecipeForm({ recipe }) {
         </div>
 
         <div className="text-lg font-medium">
-          <label>Ingredients: </label>
-
-          {/* {ingredients.tags.reduce((acc, item) => `${acc},${item.name}`, "")} */}
-          <div className="flex flex-wrap">
-            {ingredients.tags.map((item, key) => {
-              return (
-                <div className="w-max box-border px-3 py-1 mr-2 bg-gray-300 rounded-lg">
-                  {item.name}{" "}
-                  <span
-                    className="text-2xl cursor-pointer"
-                    onClick={() => {
-                      onDelete(item);
-                    }}>
-                    &#215;
-                  </span>
-                </div>
-              );
-            })}
-          </div>
+          <label className="block mx-2">Ingredients: </label>
 
           <div className="m-2 bg-white border-gray-400 rounded-md outline-none">
             <ReactTags
@@ -170,18 +156,39 @@ export function RecipeForm({ recipe }) {
               }
               onDelete={onDelete}
               onAddition={onAddition}
+              placeholderText={"Add New"}
             />
+          </div>
+          <div className="flex flex-wrap mx-2">
+            {ingredients.tags.map((item, key) => {
+              return (
+                <div
+                  key={key}
+                  className="box-border px-3 py-1 mr-2 bg-gray-300 rounded-lg w-max"
+                >
+                  {item.name}{" "}
+                  <span
+                    className="text-2xl cursor-pointer"
+                    onClick={() => {
+                      onDelete(item);
+                    }}
+                  >
+                    &#215;
+                  </span>
+                </div>
+              );
+            })}
           </div>
 
           <br />
         </div>
 
-        <div className="dw-full text-lg font-medium">
+        <div className="w-full text-lg font-medium">
           <label className="block mx-2">
             Instruction <span className="text-red-700"> *</span>
           </label>
           <textarea
-            className="bg-gray-50 w-full m-2 border-gray-400 rounded-md outline-none"
+            className="p-2 border-gray-400 rounded-md outline-none bg-gray-50 w-max"
             {...register("instruction", { required: true })}
           />
           {errors?.instruction}
