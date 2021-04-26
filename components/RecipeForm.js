@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import ReactTags from "react-tag-autocomplete";
 import { useForm, Controller } from "react-hook-form";
 import { Checkbox } from "@material-ui/core";
+import { Layout } from "./Layout";
 
 export function RecipeForm({ recipe }) {
   const [ingredients, setIngredients] = useState({
@@ -59,78 +60,139 @@ export function RecipeForm({ recipe }) {
   }, []);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <label>Name</label>
-      <input {...register("name", { required: true })} />
-      {errors.name && <span>Name is required</span>}
-      <br />
+    <div className="10 mx-auto">
+      <form
+        className="max-w-xl mx-auto bg-gray-100"
+        onSubmit={handleSubmit(onSubmit)}>
+        <div className="text-lg font-medium">
+          <label className="block mx-2">
+            Name <span className="text-red-700"> *</span>
+          </label>
+          <input
+            className="bg-gray-50 p-2 border-gray-400 rounded-md outline-none"
+            {...register("name", { required: true })}
+          />
+          {errors?.name}
+          <br />
+        </div>
 
-      <label>Image</label>
-      <input {...register("imageUrl")} />
-      <br />
+        <div className="text-lg font-medium">
+          <label className="block mx-2">Image URL</label>
+          <input
+            className="bg-gray-50 p-2 border-gray-400 rounded-md outline-none"
+            {...register("imageUrl")}
+          />
+          <br />
+        </div>
+        <div className="text-lg font-medium">
+          <label className="block mx-2">
+            Prep Time <span className="text-red-700"> *</span>
+          </label>
+          <input
+            className="bg-gray-50 p-2 border-gray-400 rounded-md outline-none"
+            {...register("prepTime", { required: true })}
+          />
+          {errors?.prepTime}
+          <br />
+        </div>
 
-      <label>Prep Time</label>
-      <input {...register("prepTime", { required: true })} />
-      {errors.prepTime && <span>Prep Time is required</span>}
-      <br />
+        <div className="text-lg font-medium">
+          <label className="block mx-2">
+            Cook Time <span className="text-red-700"> *</span>
+          </label>
+          <input
+            className="bg-gray-50 p-2 border-gray-400 rounded-md outline-none"
+            {...register("cookTime", { required: true })}
+          />
+          {errors?.cookTime}
+          <br />
+        </div>
 
-      <label>Cook Time</label>
-      <input {...register("cookTime", { required: true })} />
-      {errors.cookTime && <span>Cook time is required</span>}
-      <br />
+        <div className="text-lg font-medium">
+          <label className="block mx-2">Difficulty</label>
+          <input
+            className="bg-gray-50 p-2 border-gray-400 rounded-md outline-none"
+            {...register("difficulty")}
+          />
+          <br />
+        </div>
 
-      <label>Difficulty</label>
-      <input {...register("difficulty")} />
-      <br />
+        <div className="text-lg font-medium">
+          <label className="block mx-2">Serves</label>
+          <input
+            className="bg-gray-50 p-2 border-gray-400 rounded-md outline-none"
+            {...register("serves")}
+          />
+          <br />
+        </div>
 
-      <label>Serves</label>
-      <input {...register("serves")} />
-      <br />
+        <div className="text-lg font-medium">
+          <label className="block mx-2">
+            Description <span className="text-red-700"> *</span>
+          </label>
+          <textarea
+            className="bg-gray-50 w-max p-2 border-gray-400 rounded-md outline-none"
+            {...register("description", { required: true })}
+          />
+          {errors?.description}
+          <br />
+        </div>
 
-      <label>Description</label>
-      <textarea {...register("description", { required: true })} />
-      {errors.description && <span>Description is required.</span>}
-      <br />
+        <div className="text-lg font-medium">
+          <label>Ingredients: </label>
 
-      <label>Ingredients: </label>
+          {/* {ingredients.tags.reduce((acc, item) => `${acc},${item.name}`, "")} */}
+          <div className="flex flex-wrap">
+            {ingredients.tags.map((item, key) => {
+              return (
+                <div className="w-max box-border px-3 py-1 mr-2 bg-gray-300 rounded-lg">
+                  {key + 1} {item.name}{" "}
+                  <span
+                    className="text-2xl cursor-pointer"
+                    onClick={() => {
+                      onDelete(item);
+                    }}>
+                    &#215;
+                  </span>
+                </div>
+              );
+            })}
+          </div>
 
-      {/* {ingredients.tags.reduce((acc, item) => `${acc},${item.name}`, "")} */}
-      <ul>
-        {ingredients.tags.map((item, key) => {
-          return (
-            <li
-              className="cursor-pointer"
-              onClick={() => {
-                onDelete(item);
-              }}
-            >
-              {key + 1} {item.name}
-            </li>
-          );
-        })}
-      </ul>
+          <div className="m-2 bg-white border-gray-400 rounded-md outline-none">
+            <ReactTags
+              className=""
+              suggestions={ingredients?.suggestions}
+              noSuggestionsText={
+                ingredients?.suggestions.length !== 0
+                  ? "No matching ingredients"
+                  : "Ingredients Loading"
+              }
+              onDelete={onDelete}
+              onAddition={onAddition}
+            />
+          </div>
 
-      <div className="w-80">
-        <ReactTags
-          suggestions={ingredients?.suggestions}
-          noSuggestionsText={
-            ingredients?.suggestions.length !== 0
-              ? "No matching ingredients"
-              : "Ingredients Loading"
-          }
-          onDelete={onDelete}
-          onAddition={onAddition}
+          <br />
+        </div>
+
+        <div className="dw-full text-lg font-medium">
+          <label className="block mx-2">
+            Instruction <span className="text-red-700"> *</span>
+          </label>
+          <textarea
+            className="bg-gray-50 w-full m-2 border-gray-400 rounded-md outline-none"
+            {...register("instruction", { required: true })}
+          />
+          {errors?.instruction}
+          <br />
+        </div>
+
+        <input
+          type="submit"
+          className="px-4 py-2 text-lg font-bold border-4 border-gray-400 rounded-lg"
         />
-      </div>
-
-      <br />
-
-      <label>Instruction</label>
-      <textarea {...register("instruction", { required: true })} />
-      {errors.instruction && <span>Instruction is required.</span>}
-      <br />
-
-      <input type="submit" />
-    </form>
+      </form>
+    </div>
   );
 }
