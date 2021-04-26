@@ -146,7 +146,7 @@ export function RecipeForm({ recipe }) {
             {ingredients.tags.map((item, key) => {
               return (
                 <div className="w-max box-border px-3 py-1 mr-2 bg-gray-300 rounded-lg">
-                  {key + 1} {item.name}{" "}
+                  {item.name}{" "}
                   <span
                     className="text-2xl cursor-pointer"
                     onClick={() => {
