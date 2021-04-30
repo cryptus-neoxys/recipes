@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from "react";
-import ReactTags from "react-tag-autocomplete";
-import { useForm, Controller } from "react-hook-form";
-import { Checkbox } from "@material-ui/core";
-import { Layout } from "./Layout";
+import { useForm } from "react-hook-form";
+import { SearchBar } from "./SearchBar";
 
 export function RecipeForm({ recipe }) {
   const [ingredients, setIngredients] = useState({
     tags: [],
     suggestions: [],
   });
-
-  const [, rerender] = useState();
 
   const {
     register,
@@ -46,7 +42,6 @@ export function RecipeForm({ recipe }) {
     try {
       let data = await fetch(`/api/ingredient`, { method: "GET" });
       data = await data.json();
-      // console.log(data.data);
       let suggestionsList = data.data.map((item) => {
         return { id: item["_id"], name: item["name"] };
       });
@@ -75,7 +70,8 @@ export function RecipeForm({ recipe }) {
             Name <span className="text-red-700"> *</span>
           </label>
           <input
-            className="p-2 border-gray-400 rounded-md outline-none bg-gray-50"
+            placeholder="Add recipe name"
+            className="w-auto p-2 border-gray-400 rounded-md outline-none bg-gray-50"
             {...register("name", { required: true })}
           />
           {errors.name && <span>Name is required</span>}
@@ -85,6 +81,7 @@ export function RecipeForm({ recipe }) {
         <div className="text-lg font-medium">
           <label className="block mx-2">Image URL</label>
           <input
+            placeholder="Add image url"
             className="p-2 border-gray-400 rounded-md outline-none bg-gray-50"
             {...register("imageUrl")}
           />
@@ -92,9 +89,10 @@ export function RecipeForm({ recipe }) {
         </div>
         <div className="text-lg font-medium">
           <label className="block mx-2">
-            Prep Time <span className="text-red-700"> *</span>
+            Preparation Time <span className="text-red-700"> *</span>
           </label>
           <input
+            placeholder="Add prepartion time"
             className="p-2 border-gray-400 rounded-md outline-none bg-gray-50"
             {...register("prepTime", { required: true })}
           />
@@ -107,6 +105,7 @@ export function RecipeForm({ recipe }) {
             Cook Time <span className="text-red-700"> *</span>
           </label>
           <input
+            placeholder="Add cook time"
             className="p-2 border-gray-400 rounded-md outline-none bg-gray-50"
             {...register("cookTime", { required: true })}
           />
@@ -117,6 +116,7 @@ export function RecipeForm({ recipe }) {
         <div className="text-lg font-medium">
           <label className="block mx-2">Difficulty</label>
           <input
+            placeholder="Add recipe difficulty"
             className="p-2 border-gray-400 rounded-md outline-none bg-gray-50"
             {...register("difficulty")}
           />
@@ -126,6 +126,7 @@ export function RecipeForm({ recipe }) {
         <div className="text-lg font-medium">
           <label className="block mx-2">Serves</label>
           <input
+            placeholder="Servings"
             className="p-2 border-gray-400 rounded-md outline-none bg-gray-50"
             {...register("serves")}
           />
@@ -137,6 +138,7 @@ export function RecipeForm({ recipe }) {
             Description <span className="text-red-700"> *</span>
           </label>
           <textarea
+            placeholder="Add recipe discription"
             className="p-2 border-gray-400 rounded-md outline-none bg-gray-50 w-max"
             {...register("description", { required: true })}
           />
@@ -148,17 +150,9 @@ export function RecipeForm({ recipe }) {
           <label className="block mx-2">Ingredients: </label>
 
           <div className="m-2 bg-white border-gray-400 rounded-md outline-none">
-            <ReactTags
-              className=""
-              suggestions={ingredients?.suggestions}
-              noSuggestionsText={
-                ingredients?.suggestions.length !== 0
-                  ? "No matching ingredients"
-                  : "Ingredients Loading"
-              }
-              onDelete={onDelete}
-              onAddition={onAddition}
-              placeholderText={"Add New"}
+            <SearchBar
+              ingredients={ingredients}
+              setIngredients={setIngredients}
             />
           </div>
           <div className="flex flex-wrap mx-2">
@@ -166,7 +160,7 @@ export function RecipeForm({ recipe }) {
               return (
                 <div
                   key={key}
-                  className="box-border px-3 py-1 mr-2 bg-gray-300 rounded-lg w-max"
+                  className="box-border flex flex-row items-center justify-center px-3 py-1 mr-2 bg-gray-300 rounded-lg w-max"
                 >
                   {item.name}{" "}
                   <span
@@ -190,6 +184,7 @@ export function RecipeForm({ recipe }) {
             Instruction <span className="text-red-700"> *</span>
           </label>
           <textarea
+            placeholder="Add instructions"
             className="p-2 border-gray-400 rounded-md outline-none bg-gray-50 w-max"
             {...register("instruction", { required: true })}
           />
