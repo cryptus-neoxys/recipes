@@ -13,7 +13,7 @@ export default function Home() {
   return (
     <Layout title={"HOME"}>
       <div className="flex justify-center">
-        <h1 className="text-9xl">hello world</h1>
+        <h1 className="text-9xl">Recipe</h1>
       </div>
     </Layout>
   );

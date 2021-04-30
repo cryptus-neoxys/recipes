@@ -15,12 +15,12 @@ export function RecipeForm({ recipe }) {
   const {
     register,
     handleSubmit,
-    watch,
-    control,
     formState: { errors },
   } = useForm();
 
   const onSubmit = (data) => {
+    console.log({ error });
+
     data["ingredients"] = ingredients.tags;
     console.log(data);
 
@@ -78,7 +78,7 @@ export function RecipeForm({ recipe }) {
             className="p-2 border-gray-400 rounded-md outline-none bg-gray-50"
             {...register("name", { required: true })}
           />
-          {errors?.name}
+          {errors.name && <span>Name is required</span>}
           <br />
         </div>
 
@@ -98,7 +98,7 @@ export function RecipeForm({ recipe }) {
             className="p-2 border-gray-400 rounded-md outline-none bg-gray-50"
             {...register("prepTime", { required: true })}
           />
-          {errors?.prepTime}
+          {errors.prepTime && <span>Prep Time is required</span>}
           <br />
         </div>
 
@@ -110,7 +110,7 @@ export function RecipeForm({ recipe }) {
             className="p-2 border-gray-400 rounded-md outline-none bg-gray-50"
             {...register("cookTime", { required: true })}
           />
-          {errors?.cookTime}
+          {errors.cookTime && <span>Cook time is required</span>}
           <br />
         </div>
 
@@ -140,7 +140,7 @@ export function RecipeForm({ recipe }) {
             className="p-2 border-gray-400 rounded-md outline-none bg-gray-50 w-max"
             {...register("description", { required: true })}
           />
-          {errors?.description}
+          {errors.description && <span>Description is required.</span>}
           <br />
         </div>
 
@@ -193,7 +193,7 @@ export function RecipeForm({ recipe }) {
             className="p-2 border-gray-400 rounded-md outline-none bg-gray-50 w-max"
             {...register("instruction", { required: true })}
           />
-          {errors?.instruction}
+          {errors.instruction && <span>Instruction is required.</span>}
           <br />
         </div>
 

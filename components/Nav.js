@@ -8,7 +8,9 @@ export const Nav = () => {
   return (
     <div className="flex flex-row justify-between ">
       <div>
-        <img src={"/logo.jpg"} className="h-32" />
+        <Link href="/">
+          <img src={"/logo.png"} className="h-16 m-6 cursor-pointer" />
+        </Link>
       </div>
       {/* <div className="flex">
         <div className="mx-2">
@@ -21,7 +23,7 @@ export const Nav = () => {
           <Link href={"/team"}>Team</Link>
         </div>
       </div> */}
-      <div className="p-3">
+      <div className="p-6">
         {session ? (
           <div
             className="flex flex-row items-center justify-center p-1 px-2 border border-black rounded-lg cursor-pointer"
@@ -32,7 +34,7 @@ export const Nav = () => {
               }
             }}
           >
-            <img src={session.user.image} className="h-8 rounded-full" />
+            <img src={session.user.image} className="h-8 mr-2 rounded-full" />
             {session.user.name} <br />
             {/* <button onClick={() => signOut()}>Sign out</button> */}
           </div>
