@@ -54,7 +54,9 @@ export function RecipeForm({ recipe }) {
         suggestions: suggestionsList,
         tags: [],
       });
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
