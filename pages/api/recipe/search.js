@@ -1,20 +1,24 @@
 import dbConnect from "../../../utils/dbConnect";
 import Recipe from "../../../models/Recipe";
+import { ObjectId } from "mongoose";
 
 export default async function handler(req, res) {
-  const {
-    method,
-    body: { ingredientIds },
-  } = req;
+  const { method } = req;
+  console.log(req, typeof req);
+  const ingredients = req.body.ingredients;
+
+  console.log(ingredients);
 
   try {
-    if (method !== "GET") {
+    if (method !== "POST") {
       return res
         .status(405)
         .json({ success: false, message: "Method not allowed" });
     }
     await dbConnect();
-    const Recipes = await Recipe.find({ ingredients: ingredientIds });
+    const Recipes = await Recipe.find({
+      ingredients: { $all: ingredients },
+    });
     if (!Recipes) {
       return res
         .status(404)
