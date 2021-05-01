@@ -15,8 +15,8 @@ export default async function handler(req, res) {
         const ingredient = await Ingredient.findById(id);
         if (!ingredient) {
           return res
-            .status(400)
-            .json({ success: false, message: "No such Ingredient" });
+            .status(404)
+            .json({ success: false, message: "No ingredient found" });
         }
         return res.status(200).json({ success: true, data: ingredient });
       } catch (error) {
