@@ -1,3 +1,4 @@
+import { connect } from "mongoose";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { SearchBar } from "./SearchBar";
@@ -14,27 +15,19 @@ export function RecipeForm({ recipe }) {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log({ error });
-
-    data["ingredients"] = ingredients.tags;
+  const onSubmit = async (data) => {
+    data["ingredients"] = ingredients.tags.map((item) => item.id);
+    data["serves"] = parseInt(data["serves"]);
     console.log(data);
 
-    //SEND TO data to Mongo
-  };
-
-  const onDelete = (i) => {
-    let temp = ingredients.tags;
-    temp.splice(temp.indexOf(i), 1);
-    setIngredients({ suggestions: ingredients.suggestions, tags: temp });
-  };
-
-  const onAddition = (tag) => {
-    if (ingredients.tags.indexOf(tag) == -1) {
-      setIngredients({
-        suggestions: ingredients.suggestions,
-        tags: [].concat(ingredients.tags, tag),
-      });
+    try {
+      const res = await fetch(`/api/recipe`, {
+        method: "POST",
+        body: JSON.stringify(data),
+      }).then((data) => data.json());
+      console.log(res);
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -126,6 +119,7 @@ export function RecipeForm({ recipe }) {
         <div className="text-lg font-medium">
           <label className="block mx-2">Serves</label>
           <input
+            type="number"
             placeholder="Servings"
             className="p-2 border-gray-400 rounded-md outline-none bg-gray-50"
             {...register("serves")}
@@ -164,12 +158,12 @@ export function RecipeForm({ recipe }) {
                 >
                   {item.name}{" "}
                   <span
-                    className="text-2xl cursor-pointer"
+                    className="text-2xl cursor-pointer "
                     onClick={() => {
                       onDelete(item);
                     }}
                   >
-                    &#215;
+                    &nbsp; &#215;
                   </span>
                 </div>
               );
