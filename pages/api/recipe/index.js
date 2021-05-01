@@ -22,7 +22,7 @@ export default async function handler(req, res) {
       break;
     case "POST":
       try {
-        const recipe = await Recipe.create(req.body);
+        const recipe = await Recipe.create(JSON.parse(req.body));
 
         res.status(201).json({ success: true, data: recipe });
       } catch (error) {

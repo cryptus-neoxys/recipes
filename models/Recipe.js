@@ -30,9 +30,9 @@ const RecipeSchema = new Schema(
       type: [Schema.Types.ObjectId],
       ref: "ingredients",
     },
-    preperation: {
+    instruction: {
       type: String,
-      required: [true, "Please specify the preperation of recipe."],
+      required: [true, "Please specify the instruction of recipe."],
     },
   },
   {
