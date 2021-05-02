@@ -1,11 +1,11 @@
 import dbConnect from "../../../utils/dbConnect";
 import Recipe from "../../../models/Recipe";
-import { ObjectId } from "mongoose";
 
 export default async function handler(req, res) {
   const { method } = req;
   console.log(req, typeof req);
-  const ingredients = req.body.ingredients;
+  const body = JSON.parse(req.body);
+  const ingredients = body.ingredients;
 
   console.log(ingredients);
 
