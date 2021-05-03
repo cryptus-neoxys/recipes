@@ -33,19 +33,29 @@ export const Nav = () => {
         </Link> */}
 
         {session ? (
-          <div
-            className="flex flex-row items-center justify-center p-1 px-2 border border-black rounded-lg cursor-pointer"
-            onClick={() => {
-              let r = confirm("Do you want to logout?");
-              if (r) {
-                signOut();
-              }
-            }}
-          >
-            <img src={session.user.image} className="h-8 mr-2 rounded-full" />
-            {session.user.name} <br />
-            {/* <button onClick={() => signOut()}>Sign out</button> */}
-          </div>
+          <>
+            <div
+              onClick={() => {
+                router.push(`/user/${session.user.email.split("@")[0]}`);
+              }}
+              className="flex flex-row items-center justify-center p-1 px-2 border border-black rounded-lg cursor-pointer"
+            >
+              <img src={session.user.image} className="h-8 mr-2 rounded-full" />
+              {session.user.name} <br />
+              {/* <button onClick={() => signOut()}>Sign out</button> */}
+            </div>
+            <button
+              onClick={() => {
+                let r = confirm("Do you want to logout?");
+                if (r) {
+                  signOut();
+                }
+              }}
+              className="px-3 py-2 mx-3 font-bold text-white bg-black border border-black rounded-lg hover:bg-white hover:text-black hover:rounded-lg"
+            >
+              Logout
+            </button>
+          </>
         ) : (
           <div
             className="flex flex-row items-center justify-center p-1 px-2 border border-black rounded-lg cursor-pointer"
