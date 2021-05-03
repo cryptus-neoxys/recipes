@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { SearchBar } from "./SearchBar";
 import { useRouter } from "next/router";
+import { signIn, useSession } from "next-auth/client";
 
 export function RecipeForm({ recipe }) {
   const [ingredients, setIngredients] = useState({
@@ -11,6 +12,7 @@ export function RecipeForm({ recipe }) {
   });
 
   const router = useRouter();
+  const [session, loading] = useSession();
 
   const {
     register,
@@ -60,10 +62,17 @@ export function RecipeForm({ recipe }) {
   };
 
   useEffect(() => {
-    fetchIngridents();
+    if (!session) {
+      console.log({ session });
+      signIn("google");
+    } else {
+      fetchIngridents();
+    }
   }, []);
 
-  return (
+  return !session ? (
+    <p>redirecting</p>
+  ) : (
     <div className="mx-auto 10">
       <form
         className="max-w-xl p-4 mx-auto bg-gray-100"

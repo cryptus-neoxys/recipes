@@ -1,9 +1,11 @@
 import React from "react";
 import Link from "next/link";
 import { useSession, signIn, signOut } from "next-auth/client";
+import { useRouter } from "next/router";
 
 export const Nav = () => {
   const [session, loading] = useSession();
+  const router = useRouter();
 
   return (
     <div className="flex flex-row justify-between ">
@@ -23,7 +25,13 @@ export const Nav = () => {
           <Link href={"/team"}>Team</Link>
         </div>
       </div> */}
-      <div className="p-6">
+      <div className="flex items-center p-6">
+        {/* <Link href="/recipe/new">
+          <button className="px-3 py-2 mx-3 font-bold text-white bg-black border border-black rounded-lg hover:bg-white hover:text-black hover:rounded-lg">
+            Create Recipe!
+          </button>
+        </Link> */}
+
         {session ? (
           <div
             className="flex flex-row items-center justify-center p-1 px-2 border border-black rounded-lg cursor-pointer"

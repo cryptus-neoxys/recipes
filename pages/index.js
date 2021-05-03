@@ -3,6 +3,7 @@ import { Layout } from "../components/Layout";
 import { useSession } from "next-auth/client";
 import { SearchBar } from "./../components/SearchBar";
 import { RecipeCard } from "@components/RecipeCard";
+import Link from "next/link";
 
 export default function Home() {
   const [session, loading] = useSession();
@@ -63,8 +64,7 @@ export default function Home() {
   return (
     <Layout title={"HOME"}>
       <div className="flex flex-col items-center justify-center">
-        <h1 className="mb-6 text-9xl">Find your recipie!</h1>
-        <div className="flex items-center justify-center w-1/2 m-5">
+        <div className="flex flex-row items-center justify-center w-1/2 ">
           <div className="w-full">
             <SearchBar
               ingredients={ingredients}
@@ -77,6 +77,11 @@ export default function Home() {
           >
             SEARCH
           </button>
+          <Link href="/recipe/new">
+            <button className="self-center px-3 py-2 mr-3 font-bold text-white bg-black border border-black rounded-lg hover:bg-white hover:text-black hover:rounded-lg">
+              CREATE
+            </button>
+          </Link>
         </div>
         <div className="flex flex-row flex-wrap justify-start w-1/2 ">
           {ingredients.tags.map((item, key) => {
@@ -108,3 +113,5 @@ export default function Home() {
     </Layout>
   );
 }
+
+// export const getServerSideProps = withPageAuthRequired();
