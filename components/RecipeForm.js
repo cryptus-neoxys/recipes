@@ -2,6 +2,8 @@ import { connect } from "mongoose";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { SearchBar } from "./SearchBar";
+import { useRouter } from "next/router";
+import { signIn, useSession } from "next-auth/client";
 
 export function RecipeForm({ recipe }) {
   const [ingredients, setIngredients] = useState({
@@ -9,11 +11,20 @@ export function RecipeForm({ recipe }) {
     suggestions: [],
   });
 
+  const router = useRouter();
+  const [session, loading] = useSession();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  const onDelete = (i) => {
+    let temp = ingredients.tags;
+    temp.splice(temp.indexOf(i), 1);
+    setIngredients({ suggestions: ingredients.suggestions, tags: temp });
+  };
 
   const onSubmit = async (data) => {
     data["ingredients"] = ingredients.tags.map((item) => item.id);
@@ -26,6 +37,9 @@ export function RecipeForm({ recipe }) {
         body: JSON.stringify(data),
       }).then((data) => data.json());
       console.log(res);
+      if (res.success === true) {
+        router.push("/");
+      }
     } catch (err) {
       console.log(err);
     }
@@ -48,10 +62,17 @@ export function RecipeForm({ recipe }) {
   };
 
   useEffect(() => {
-    fetchIngridents();
+    if (!session) {
+      console.log({ session });
+      signIn("google");
+    } else {
+      fetchIngridents();
+    }
   }, []);
 
-  return (
+  return !session ? (
+    <p>redirecting</p>
+  ) : (
     <div className="mx-auto 10">
       <form
         className="max-w-xl p-4 mx-auto bg-gray-100"
