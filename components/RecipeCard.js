@@ -30,7 +30,7 @@ export const RecipeCard = ({ recipe }) => {
         <div className="flex flex-row flex-wrap mt-4 text-sm text-left text-wrap w-[200px]">
           {/* {recipe.ingredients.slice(0, 3).join(", ")} */}
           {recipe.ingredients.map((ingredient, key) => {
-            return <Tag ingredient={ingredient} key={key} />;
+            return <Tag ingredient={ingredient.name} key={key} />;
           })}
         </div>
       </div>

@@ -18,7 +18,7 @@ export default async function handler(req, res) {
     await dbConnect();
     const Recipes = await Recipe.find({
       ingredients: { $in: ingredients },
-    });
+    }).populate("ingredients");
     if (!Recipes) {
       return res
         .status(404)

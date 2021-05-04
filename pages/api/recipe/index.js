@@ -9,7 +9,7 @@ export default async function handler(req, res) {
   switch (method) {
     case "GET":
       try {
-        const recipes = await Recipe.find(); // Get all recipes
+        const recipes = await Recipe.find().populate("ingredients"); // Get all recipes
 
         res.status(200).json({ success: true, data: recipes });
       } catch (error) {

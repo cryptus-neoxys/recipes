@@ -1,4 +1,5 @@
 import { model, Schema, models } from "mongoose";
+import Ingredient from "./Ingredient";
 
 const RecipeSchema = new Schema(
   {
@@ -26,10 +27,12 @@ const RecipeSchema = new Schema(
       type: String,
       required: [true, "Please specify the description of recipe."],
     },
-    ingredients: {
-      type: [Schema.Types.ObjectId],
-      ref: "ingredients",
-    },
+    ingredients: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Ingredient",
+      },
+    ],
     instruction: {
       type: String,
       required: [true, "Please specify the instruction of recipe."],
@@ -39,5 +42,7 @@ const RecipeSchema = new Schema(
     timestamps: true,
   }
 );
+
+// export default models.Recipe || model("Recipe", RecipeSchema);
 
 export default models.Recipe || model("Recipe", RecipeSchema);
