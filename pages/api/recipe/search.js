@@ -3,7 +3,6 @@ import Recipe from "../../../models/Recipe";
 
 export default async function handler(req, res) {
   const { method } = req;
-  console.log(req, typeof req);
   const body = JSON.parse(req.body);
   const ingredients = body.ingredients;
 
@@ -17,8 +16,8 @@ export default async function handler(req, res) {
     }
     await dbConnect();
     const Recipes = await Recipe.find({
-      ingredients: { $in: ingredients },
-    }).populate("ingredients");
+      tags: { $all: ingredients },
+    }).populate("tags");
     if (!Recipes) {
       return res
         .status(404)

@@ -20,7 +20,6 @@ let ingredients = new Set();
 
 MongoClient.connect(url, async function (err, db) {
   if (err) throw err;
-
   var dbo = db.db("test");
 
   let rawdata = fs.readFileSync("C:\\Dev\\train.json");

@@ -64,7 +64,7 @@ export default function Home() {
   return (
     <Layout title={"HOME"}>
       <div className="flex flex-col items-center justify-center">
-        <div className="flex flex-row items-center justify-center w-1/2 ">
+        <div className=" flex flex-row items-center justify-center w-1/2">
           <div className="w-full">
             <SearchBar
               ingredients={ingredients}
@@ -73,37 +73,34 @@ export default function Home() {
           </div>
           <button
             onClick={search}
-            className="px-3 py-2 mx-3 font-bold text-white bg-black border border-black rounded-lg hover:bg-white hover:text-black hover:rounded-lg"
-          >
+            className="hover:bg-white hover:text-black hover:rounded-lg px-3 py-2 mx-3 font-bold text-white bg-black border border-black rounded-lg">
             SEARCH
           </button>
           <Link href="/recipe/new">
-            <button className="self-center px-3 py-2 mr-3 font-bold text-white bg-black border border-black rounded-lg hover:bg-white hover:text-black hover:rounded-lg">
+            <button className="hover:bg-white hover:text-black hover:rounded-lg self-center px-3 py-2 mr-3 font-bold text-white bg-black border border-black rounded-lg">
               CREATE
             </button>
           </Link>
         </div>
-        <div className="flex flex-row flex-wrap justify-start w-1/2 ">
+        <div className=" flex flex-row flex-wrap justify-start w-1/2">
           {ingredients.tags.map((item, key) => {
             return (
               <div
                 key={key}
-                className="box-border flex flex-row items-center justify-center px-3 py-1 my-2 mr-2 bg-gray-300 rounded-lg w-max"
-              >
+                className="w-max box-border flex flex-row items-center justify-center px-3 py-1 my-2 mr-2 bg-gray-300 rounded-lg">
                 {item.name}{" "}
                 <span
                   className="text-2xl cursor-pointer"
                   onClick={() => {
                     onDelete(item);
-                  }}
-                >
+                  }}>
                   &#215;
                 </span>
               </div>
             );
           })}
         </div>
-        <div className="flex flex-row flex-wrap w-2/3 mb-6">
+        <div className="flex flex-row flex-wrap justify-center w-2/3 mb-6">
           {recipes &&
             recipes.map((recipe, key) => {
               return <RecipeCard recipe={recipe} key={key} />;

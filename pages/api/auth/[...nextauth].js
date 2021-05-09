@@ -1,3 +1,4 @@
+import User from "models/User";
 import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
 
@@ -14,6 +15,8 @@ export default NextAuth({
     // }),
   ],
 
+  database: process.env.MONGODB_URI,
+
   callbacks: {
     async signIn(user, account, profile) {
       console.log({ user });
@@ -25,6 +28,9 @@ export default NextAuth({
       return baseUrl;
     },
     async session(session, user) {
+      session["user"]["_id"] = (await User.findOne({ email: user.email }))[
+        "_id"
+      ];
       return session;
     },
     async jwt(token, user, account, profile, isNewUser) {

@@ -1,5 +1,5 @@
 import dbConnect from "../../../utils/dbConnect";
-import Recipe from "../../../models/Recipe";
+import User from "../../../models/User";
 
 export default async function handler(req, res) {
   const { method } = req;
@@ -9,12 +9,9 @@ export default async function handler(req, res) {
   switch (method) {
     case "GET":
       try {
-        const recipes = await Recipe.find().populate("tags"); // Get all recipes
-
-        res.status(200).json({ success: true, data: recipes });
+        return res.status(405).json({ success: false, message: "Bad Request" });
       } catch (error) {
         console.error(error);
-
         res
           .status(500)
           .json({ success: false, message: "Something went wrong" });
@@ -22,9 +19,11 @@ export default async function handler(req, res) {
       break;
     case "POST":
       try {
-        const recipe = await Recipe.create(JSON.parse(req.body));
+        const body = JSON.parse(req.body);
+        const { name, email } = body;
+        const user = await User.create({ name, email });
 
-        res.status(201).json({ success: true, data: recipe });
+        res.status(201).json({ success: true, data: user });
       } catch (error) {
         console.error(error);
 

@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 
 export const Nav = () => {
   const [session, loading] = useSession();
+  console.log({ session });
   const router = useRouter();
 
   return (

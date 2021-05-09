@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@material-ui/core": "^4.11.3",
+    "mongodb": "^3.6.6",
     "mongoose": "^5.12.3",
     "next": "10.1.2",
     "next-auth": "^3.13.3",
@@ -22,5 +23,8 @@
     "autoprefixer": "^10.2.5",
     "postcss": "^8.2.9",
     "tailwindcss": "^2.0.4"
+  },
+  "peerOptionalDependencies": {
+    "mongodb": "^3.6.6"
   }
 }

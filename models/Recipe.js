@@ -1,5 +1,6 @@
 import { model, Schema, models } from "mongoose";
 import Ingredient from "./Ingredient";
+import User from "./User";
 
 const RecipeSchema = new Schema(
   {
@@ -7,9 +8,19 @@ const RecipeSchema = new Schema(
       type: String,
       required: [true, "Please specify the name of recipe."],
     },
+    video: {
+      type: String,
+    },
     image: {
       type: String,
     },
+    ingredients: [{ type: String }],
+    tags: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Ingredient",
+      },
+    ],
     prepTime: {
       type: String,
       required: [true, "Please specify the prep time of recipe."],
@@ -19,23 +30,17 @@ const RecipeSchema = new Schema(
       required: [true, "Please specify the cook time of recipe."],
     },
     serves: Number,
-    difficulty: {
-      type: String,
-      required: [true, "Please specify the difficulty of recipe."],
+    author: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
     },
-    description: {
-      type: String,
-      required: [true, "Please specify the description of recipe."],
-    },
-    ingredients: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Ingredient",
-      },
-    ],
-    instruction: {
+    directions: {
       type: String,
       required: [true, "Please specify the instruction of recipe."],
+    },
+    nutrition: {
+      type: String,
+      required: false,
     },
   },
   {
@@ -46,3 +51,18 @@ const RecipeSchema = new Schema(
 // export default models.Recipe || model("Recipe", RecipeSchema);
 
 export default models.Recipe || model("Recipe", RecipeSchema);
+
+/* 
+_id
+video
+images
+ingredients
+tags
+directions
+nutrition
+name
+cook
+prep
+serves
+author
+*/
