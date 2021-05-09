@@ -14,6 +14,8 @@ export default NextAuth({
     // }),
   ],
 
+  database: process.env.MONGODB_URI,
+
   callbacks: {
     async signIn(user, account, profile) {
       console.log({ user });

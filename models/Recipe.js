@@ -1,5 +1,6 @@
 import { model, Schema, models } from "mongoose";
 import Ingredient from "./Ingredient";
+import User from "./User";
 
 const RecipeSchema = new Schema(
   {
