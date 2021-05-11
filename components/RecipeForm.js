@@ -11,6 +11,14 @@ export function RecipeForm({ recipe }) {
     suggestions: [],
   });
 
+  const [quantity, setQuantity] = useState([]);
+
+  const changeQuantity = (e, index, item) => {
+    let qnty = quantity;
+    qnty[index] = `${e.target.value} ${item}`;
+    setQuantity(qnty);
+  };
+
   const router = useRouter();
   const [session, loading] = useSession();
 
@@ -27,22 +35,25 @@ export function RecipeForm({ recipe }) {
   };
 
   const onSubmit = async (data) => {
-    data["ingredients"] = ingredients.tags.map((item) => item.id);
+    data["tags"] = ingredients.tags.map((item) => item.id);
+    data["ingredients"] = quantity;
     data["serves"] = parseInt(data["serves"]);
+    data["author"] = session.user["_id"] || null;
+    data["directions"] = [data["directions"]];
     console.log(data);
 
-    try {
-      const res = await fetch(`/api/recipe`, {
-        method: "POST",
-        body: JSON.stringify(data),
-      }).then((data) => data.json());
-      console.log(res);
-      if (res.success === true) {
-        router.push("/");
-      }
-    } catch (err) {
-      console.log(err);
-    }
+    // try {
+    //   const res = await fetch(`/api/recipe`, {
+    //     method: "POST",
+    //     body: JSON.stringify(data),
+    //   }).then((data) => data.json());
+    //   console.log(res);
+    //   if (res.success === true) {
+    //     router.push("/");
+    //   }
+    // } catch (err) {
+    //   console.log(err);
+    // }
   };
 
   const fetchIngridents = async () => {
@@ -97,7 +108,7 @@ export function RecipeForm({ recipe }) {
           <input
             placeholder="Add image url"
             className="p-2 border-gray-400 rounded-md outline-none bg-gray-50"
-            {...register("imageUrl")}
+            {...register("image")}
           />
           <br />
         </div>
@@ -128,16 +139,6 @@ export function RecipeForm({ recipe }) {
         </div>
 
         <div className="text-lg font-medium">
-          <label className="block mx-2">Difficulty</label>
-          <input
-            placeholder="Add recipe difficulty"
-            className="p-2 border-gray-400 rounded-md outline-none bg-gray-50"
-            {...register("difficulty")}
-          />
-          <br />
-        </div>
-
-        <div className="text-lg font-medium">
           <label className="block mx-2">Serves</label>
           <input
             type="number"
@@ -145,19 +146,6 @@ export function RecipeForm({ recipe }) {
             className="p-2 border-gray-400 rounded-md outline-none bg-gray-50"
             {...register("serves")}
           />
-          <br />
-        </div>
-
-        <div className="text-lg font-medium">
-          <label className="block mx-2">
-            Description <span className="text-red-700"> *</span>
-          </label>
-          <textarea
-            placeholder="Add recipe discription"
-            className="p-2 border-gray-400 rounded-md outline-none bg-gray-50 w-max"
-            {...register("description", { required: true })}
-          />
-          {errors.description && <span>Description is required.</span>}
           <br />
         </div>
 
@@ -175,16 +163,26 @@ export function RecipeForm({ recipe }) {
               return (
                 <div
                   key={key}
-                  className="box-border flex flex-row items-center justify-center px-3 py-1 mr-2 bg-gray-300 rounded-lg w-max"
+                  className="box-border flex flex-row items-center justify-center px-3 py-1 mt-1 mr-2 bg-gray-300 rounded-lg w-max"
                 >
-                  {item.name}{" "}
                   <span
-                    className="text-2xl cursor-pointer "
                     onClick={() => {
                       onDelete(item);
                     }}
+                    className="cursor-pointer"
                   >
-                    &nbsp; &#215;
+                    &#215; &nbsp;
+                  </span>
+                  {item.name}{" "}
+                  <span className="text-2xl cursor-pointer ">
+                    <input
+                      type="text"
+                      placeholder={`Quantity for ${item.name}`}
+                      className="p-2 text-sm border-gray-400 rounded-md outline-none bg-gray-50"
+                      onChange={(e) => {
+                        changeQuantity(e, key, item.name);
+                      }}
+                    />
                   </span>
                 </div>
               );
@@ -196,14 +194,14 @@ export function RecipeForm({ recipe }) {
 
         <div className="w-full text-lg font-medium">
           <label className="block mx-2">
-            Instruction <span className="text-red-700"> *</span>
+            Directions <span className="text-red-700"> *</span>
           </label>
           <textarea
-            placeholder="Add instructions"
+            placeholder="Add directions"
             className="p-2 border-gray-400 rounded-md outline-none bg-gray-50 w-max"
-            {...register("instruction", { required: true })}
+            {...register("directions", { required: true })}
           />
-          {errors.instruction && <span>Instruction is required.</span>}
+          {errors.directions && <span>Directions is required.</span>}
           <br />
         </div>
 
