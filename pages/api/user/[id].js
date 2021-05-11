@@ -15,14 +15,12 @@ export default async function handler(req, res) {
         let email = `${id}@gmail.com`;
 
         const user = await User.findOne({ email: email });
-
         if (!user) {
           return res
             .status(400)
             .json({ success: false, message: "User not found" });
         }
-
-        return res.status(200).json({ success: false, data: user });
+        return res.status(200).json({ success: true, data: user });
       } catch (error) {
         console.error(error);
         res
