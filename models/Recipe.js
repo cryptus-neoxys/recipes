@@ -34,10 +34,12 @@ const RecipeSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "User",
     },
-    directions: {
-      type: String,
-      required: [true, "Please specify the instruction of recipe."],
-    },
+    directions: [
+      {
+        type: String,
+        required: [true, "Please specify the instruction of recipe."],
+      },
+    ],
     nutrition: {
       type: String,
       required: false,

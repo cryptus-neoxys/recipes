@@ -42,18 +42,18 @@ export function RecipeForm({ recipe }) {
     data["directions"] = [data["directions"]];
     console.log(data);
 
-    // try {
-    //   const res = await fetch(`/api/recipe`, {
-    //     method: "POST",
-    //     body: JSON.stringify(data),
-    //   }).then((data) => data.json());
-    //   console.log(res);
-    //   if (res.success === true) {
-    //     router.push("/");
-    //   }
-    // } catch (err) {
-    //   console.log(err);
-    // }
+    try {
+      const res = await fetch(`/api/recipe`, {
+        method: "POST",
+        body: JSON.stringify(data),
+      }).then((data) => data.json());
+      console.log(res);
+      if (res.success === true) {
+        router.push("/");
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const fetchIngridents = async () => {
