@@ -1,0 +1,31 @@
+{
+  "name": "foodie-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.11.3",
+    "mongodb": "^3.6.6",
+    "mongoose": "^5.12.3",
+    "next": "10.1.2",
+    "next-auth": "^3.13.3",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-hook-form": "^7.0.3",
+    "react-player": "^2.9.0",
+    "react-tag-autocomplete": "^6.1.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/jit": "^0.1.18",
+    "autoprefixer": "^10.2.5",
+    "postcss": "^8.2.9",
+    "tailwindcss": "^2.0.4"
+  },
+  "peerOptionalDependencies": {
+    "mongodb": "^3.6.6"
+  }
+}
