@@ -1,14 +1,10 @@
-import { useEffect, useState } from "react";
 import { Layout } from "@components/Layout";
 import { RecipeCard } from "@components/RecipeCard";
-import { useRouter } from "next/router";
-import { useSession } from "next-auth/client";
 
-export default ({ user, recipes }) => {
-  console.log(user);
-  console.log(recipes);
-
-  return (
+export default ({ user, recipes, error }) => {
+  return error ? (
+    <Layout>No such user</Layout>
+  ) : (
     <Layout title={user.name}>
       <div className="w-2/3 mx-auto">
         <div>
@@ -43,11 +39,14 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   let res = await fetch(`http://localhost:3000/api/user/${params.id}`);
   let data = await res.json();
-  const user = data.data;
+  if (data.success) {
+    const user = data.data;
+    res = await fetch(`http://localhost:3000/api/recipe/user/${user._id}`);
+    data = await res.json();
 
-  res = await fetch(`http://localhost:3000/api/recipe/user/${user._id}`);
-  data = await res.json();
-  const recipes = data.data;
+    const recipes = data.data;
+    return { props: { user, recipes } };
+  }
 
-  return { props: { user, recipes } };
+  return { props: { error: true } };
 }
