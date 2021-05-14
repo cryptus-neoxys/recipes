@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import React from "react";
 import { useState } from "react";
 
@@ -10,6 +11,7 @@ const Tag = ({ ingredient }) => {
 };
 
 export const RecipeCard = ({ recipe }) => {
+  const router = useRouter();
   return (
     <div className="flex flex-col m-4">
       <div
@@ -33,6 +35,13 @@ export const RecipeCard = ({ recipe }) => {
             return <Tag ingredient={ingredient.name} key={key} />;
           })}
         </div>
+        <img
+          src="/arrow.png"
+          className="h-[20px] self-end cursor-pointer"
+          onClick={() => {
+            router.push(`/recipe/${recipe._id}`);
+          }}
+        />
       </div>
     </div>
   );
