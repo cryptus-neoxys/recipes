@@ -1,4 +1,6 @@
 import { Layout } from "@components/Layout";
+import dbConnect from "../../utils/dbConnect";
+import Recipe from "../../models/Recipe";
 
 export default ({ recipe }) => {
   console.log(recipe);
@@ -19,10 +21,11 @@ export default ({ recipe }) => {
 };
 
 export async function getStaticPaths() {
-  const res = await fetch("http://localhost:3000/api/recipe");
+  await dbConnect();
 
-  const data = await res.json();
-  const recipes = data.data;
+  const res = await Recipe.find().populate("tags");
+  const recipes = JSON.parse(JSON.stringify(res));
+
   const paths = recipes.map((recipe) => ({
     params: { id: recipe._id },
   }));
@@ -31,9 +34,8 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const res = await fetch(`http://localhost:3000/api/recipe/${params.id}`);
-  const data = await res.json();
-  const recipe = data.data;
-
+  await dbConnect();
+  const res = await Recipe.findById(params.id);
+  const recipe = JSON.parse(JSON.stringify(res));
   return { props: { recipe } };
 }
