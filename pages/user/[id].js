@@ -1,5 +1,8 @@
 import { Layout } from "@components/Layout";
 import { RecipeCard } from "@components/RecipeCard";
+import dbConnect from "../../utils/dbConnect";
+import User from "./../../models/User";
+import Recipe from "../../models/Recipe";
 
 export default ({ user, recipes, error }) => {
   return error ? (
@@ -26,9 +29,9 @@ export default ({ user, recipes, error }) => {
 };
 
 export async function getStaticPaths() {
-  const res = await fetch("http://localhost:3000/api/user");
-  const data = await res.json();
-  const users = data.data;
+  await dbConnect();
+  const res = await User.find();
+  const users = JSON.parse(JSON.stringify(res));
   const paths = users.map((user) => ({
     params: { id: user.email.split("@")[0] },
   }));
@@ -37,16 +40,13 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  let res = await fetch(`http://localhost:3000/api/user/${params.id}`);
-  let data = await res.json();
-  if (data.success) {
-    const user = data.data;
-    res = await fetch(`http://localhost:3000/api/recipe/user/${user._id}`);
-    data = await res.json();
+  await dbConnect();
+  let res = await User.findOne({ email: `${params.id}@gmail.com` });
+  const user = JSON.parse(JSON.stringify(res));
 
-    const recipes = data.data;
+  if (user) {
+    let res = await Recipe.find({ author: user._id }).populate("tags");
+    const recipes = await JSON.parse(JSON.stringify(res));
     return { props: { user, recipes } };
   }
-
-  return { props: { error: true } };
 }
