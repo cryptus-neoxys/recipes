@@ -6,18 +6,18 @@ client = MongoClient(os.getenv("MONGODB_URI"))
 db = client['test']
 ingredient = db['ingredients']
 recipe = db['recipes']
-f = open("/home/cryptus/Desktop/appetizers1-100.json")
+f = open("<path_to_json>")
 asd = []
 ingred = []
 jsonA = json.load(f)
-# for i in jsonA:
-#     for j in i['tags']:
-#         if j not in ingred:
-#             d = {}
-#             d['name'] = j
-#             ingred.append(j)
-#             asd.append(d)
-# ingredient.insert_many(asd)
+for i in jsonA:
+    for j in i['tags']:
+        if j not in ingred:
+            d = {}
+            d['name'] = j
+            ingred.append(j)
+            asd.append(d)
+ingredient.insert_many(asd)
 count = 0
 # comments = [
 #     {
