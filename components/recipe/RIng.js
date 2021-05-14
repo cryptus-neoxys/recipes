@@ -21,9 +21,9 @@ function RIng({recipe, sq}) {
             <div className="space-y-10 min-h-lg w-auto max-w-lg bg-white lg:ml-72 rounded-2xl px-14 py-10">
                <div className="flex">
                    <img src="/timer.svg" className="mr-1"/>
-                   <Det asd= "Prep" value = {recipe.prep}/>
-                   <Det asd= "Cook" value = {recipe.cook}/>
-                   <Det asd= "Total" value = {recipe.total}/>
+                   <Det asd= "Prep" value = {recipe.prepTime}/>
+                   <Det asd= "Cook" value = {recipe.cookTime}/>
+                   {/* <Det asd= "Total" value = {recipe.total}/> */}
                </div>
                <div className="flex">
                    <img src="/calories.svg" className="mr-1"/>
@@ -31,7 +31,7 @@ function RIng({recipe, sq}) {
                </div>
                <div className="flex">
                    <img src="/serves.svg" className="mr-1"/>
-                   <Det asd= "Serves" value = {recipe.servings}/>
+                   <Det asd= "Serves" value = {recipe.serves}/>
                </div>
                <h1 className="font-bold text-gray-600 tracking-widest -ml-7 text-2xl">Ingredients</h1>
                <div className='px-2 space-y-8'>

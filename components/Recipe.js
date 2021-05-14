@@ -7,7 +7,7 @@ function Recipe({recipe, sq}) {
     return (
         <div>
             <RHead str = {recipe.video}/>
-            <div className="xl:flex">
+            <div className="xl:flex justify-around">
                 <Rplayer/>
                 <RIng recipe = {recipe} sq={sq}/>
             </div>
