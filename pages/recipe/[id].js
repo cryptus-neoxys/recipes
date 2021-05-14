@@ -20,22 +20,18 @@ export default ({ recipe }) => {
   );
 };
 
-export async function getStaticPaths() {
+export async function getServerSideProps(context) {
   await dbConnect();
-
-  const res = await Recipe.find().populate("tags");
-  const recipes = JSON.parse(JSON.stringify(res));
-
-  const paths = recipes.map((recipe) => ({
-    params: { id: recipe._id },
-  }));
-
-  return { paths, fallback: false };
-}
-
-export async function getStaticProps({ params }) {
-  await dbConnect();
-  const res = await Recipe.findById(params.id);
-  const recipe = JSON.parse(JSON.stringify(res));
-  return { props: { recipe } };
+  const res = await Recipe.findById(context.params.id);
+  if (!res) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  } else {
+    const recipe = JSON.parse(JSON.stringify(res));
+    return { props: { recipe } };
+  }
 }

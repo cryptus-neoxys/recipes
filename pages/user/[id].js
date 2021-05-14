@@ -28,24 +28,19 @@ export default ({ user, recipes, error }) => {
   );
 };
 
-export async function getStaticPaths() {
+export async function getServerSideProps(context) {
   await dbConnect();
-  const res = await User.find();
-  const users = JSON.parse(JSON.stringify(res));
-  const paths = users.map((user) => ({
-    params: { id: user.email.split("@")[0] },
-  }));
-
-  return { paths, fallback: false };
-}
-
-export async function getStaticProps({ params }) {
-  await dbConnect();
-  let res = await User.findOne({ email: `${params.id}@gmail.com` });
-  const user = JSON.parse(JSON.stringify(res));
-
-  if (user) {
-    let res = await Recipe.find({ author: user._id }).populate("tags");
+  let res = await User.findOne({ email: `${context.params.id}@gmail.com` });
+  if (!res) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  } else {
+    const user = await JSON.parse(JSON.stringify(res));
+    res = await Recipe.find({ author: user._id }).populate("tags");
     const recipes = await JSON.parse(JSON.stringify(res));
     return { props: { user, recipes } };
   }
