@@ -18,7 +18,7 @@ function RIng({recipe, sq}) {
       }
     return (
         <div className="px-5 my-10 text-lg font-medium">
-            <div className="space-y-10 min-h-lg w-auto max-w-lg bg-white lg:ml-72 rounded-2xl px-14 py-10">
+            <div className="space-y-10 min-h-lg w-auto max-w-lg bg-white rounded-2xl px-14 py-10">
                <div className="flex">
                    <img src="/timer.svg" className="mr-1"/>
                    <Det asd= "Prep" value = {recipe.prepTime}/>
