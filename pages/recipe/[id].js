@@ -4,8 +4,16 @@ export default ({ recipe }) => {
   console.log(recipe);
   return (
     <Layout title={recipe.name}>
-      <h1 className="text-2xl">{recipe.name}</h1>
-      <img src={recipe.image} className="h-[300px]" />
+      <div className="p-3">
+        <div>
+          <h1 className="text-2xl">{recipe.name}</h1>
+          <img src={recipe.image} className="h-[300px]" />
+          <div>
+            <div>Method:</div>
+            <div>{recipe.directions.join(" ")}</div>
+          </div>
+        </div>
+      </div>
     </Layout>
   );
 };
