@@ -107,7 +107,11 @@ export default function Home() {
           {recipes &&
             recipes.map((recipe, key) => {
               return (
-                <RecipeCard recipe={recipe} key={key} id={`recipe-${key}`} />
+                <RecipeCard
+                  recipe={recipe}
+                  key={key}
+                  id={`recipe-${key}-link`}
+                />
               );
             })}
         </div>

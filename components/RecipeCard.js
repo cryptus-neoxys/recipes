@@ -10,7 +10,7 @@ const Tag = ({ ingredient }) => {
   );
 };
 
-export const RecipeCard = ({ recipe }) => {
+export const RecipeCard = ({ recipe, id }) => {
   const router = useRouter();
   return (
     <div className="flex flex-col m-4">
@@ -35,6 +35,7 @@ export const RecipeCard = ({ recipe }) => {
           })}
         </div>
         <img
+          id={id}
           src="/arrow.png"
           className="h-[20px] self-end cursor-pointer recipe-select"
           onClick={() => {
