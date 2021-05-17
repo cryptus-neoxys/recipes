@@ -18,6 +18,7 @@ export const SearchBar = ({ ingredients, setIngredients }) => {
   };
   return (
     <ReactTags
+      id={"id"}
       className=""
       suggestions={ingredients?.suggestions}
       noSuggestionsText={

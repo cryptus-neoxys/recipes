@@ -84,19 +84,19 @@ export function RecipeForm({ recipe }) {
   return !session ? (
     <p>redirecting</p>
   ) : (
-    <div className="mx-auto 10">
+    <div className="10 mx-auto">
       <form
         className="max-w-xl p-4 mx-auto bg-gray-100"
-        onSubmit={handleSubmit(onSubmit)}
-      >
+        onSubmit={handleSubmit(onSubmit)}>
         <h1 className="my-3 mb-6 text-4xl text-center">Create a new recipe!</h1>
         <div className="text-lg font-medium">
           <label className="block mx-2">
             Name <span className="text-red-700"> *</span>
           </label>
           <input
+            id="recipe-name"
             placeholder="Add recipe name"
-            className="w-auto p-2 border-gray-400 rounded-md outline-none bg-gray-50"
+            className="bg-gray-50 w-auto p-2 border-gray-400 rounded-md outline-none"
             {...register("name", { required: true })}
           />
           {errors.name && <span>Name is required</span>}
@@ -106,8 +106,9 @@ export function RecipeForm({ recipe }) {
         <div className="text-lg font-medium">
           <label className="block mx-2">Image URL</label>
           <input
+            id="recipe-image"
             placeholder="Add image url"
-            className="p-2 border-gray-400 rounded-md outline-none bg-gray-50"
+            className="bg-gray-50 p-2 border-gray-400 rounded-md outline-none"
             {...register("image")}
           />
           <br />
@@ -117,8 +118,9 @@ export function RecipeForm({ recipe }) {
             Preparation Time <span className="text-red-700"> *</span>
           </label>
           <input
+            id="recipe-prep"
             placeholder="Add prepartion time"
-            className="p-2 border-gray-400 rounded-md outline-none bg-gray-50"
+            className="bg-gray-50 p-2 border-gray-400 rounded-md outline-none"
             {...register("prepTime", { required: true })}
           />
           {errors.prepTime && <span>Prep Time is required</span>}
@@ -130,8 +132,9 @@ export function RecipeForm({ recipe }) {
             Cook Time <span className="text-red-700"> *</span>
           </label>
           <input
+            id="recipe-cook"
             placeholder="Add cook time"
-            className="p-2 border-gray-400 rounded-md outline-none bg-gray-50"
+            className="bg-gray-50 p-2 border-gray-400 rounded-md outline-none"
             {...register("cookTime", { required: true })}
           />
           {errors.cookTime && <span>Cook time is required</span>}
@@ -141,9 +144,10 @@ export function RecipeForm({ recipe }) {
         <div className="text-lg font-medium">
           <label className="block mx-2">Serves</label>
           <input
+            id="recipe-serves"
             type="number"
             placeholder="Servings"
-            className="p-2 border-gray-400 rounded-md outline-none bg-gray-50"
+            className="bg-gray-50 p-2 border-gray-400 rounded-md outline-none"
             {...register("serves")}
           />
           <br />
@@ -154,6 +158,7 @@ export function RecipeForm({ recipe }) {
 
           <div className="m-2 bg-white border-gray-400 rounded-md outline-none">
             <SearchBar
+              id="ingredient-search"
               ingredients={ingredients}
               setIngredients={setIngredients}
             />
@@ -163,22 +168,20 @@ export function RecipeForm({ recipe }) {
               return (
                 <div
                   key={key}
-                  className="box-border flex flex-row items-center justify-center px-3 py-1 mt-1 mr-2 bg-gray-300 rounded-lg w-max"
-                >
+                  className="w-max box-border flex flex-row items-center justify-center px-3 py-1 mt-1 mr-2 bg-gray-300 rounded-lg">
                   <span
                     onClick={() => {
                       onDelete(item);
                     }}
-                    className="cursor-pointer"
-                  >
+                    className="cursor-pointer">
                     &#215; &nbsp;
                   </span>
                   {item.name}{" "}
-                  <span className="text-2xl cursor-pointer ">
+                  <span className=" text-2xl cursor-pointer">
                     <input
                       type="text"
                       placeholder={`Quantity for ${item.name}`}
-                      className="p-2 text-sm border-gray-400 rounded-md outline-none bg-gray-50"
+                      className="bg-gray-50 p-2 text-sm border-gray-400 rounded-md outline-none"
                       onChange={(e) => {
                         changeQuantity(e, key, item.name);
                       }}
@@ -197,8 +200,9 @@ export function RecipeForm({ recipe }) {
             Directions <span className="text-red-700"> *</span>
           </label>
           <textarea
+            id="recipe-directions"
             placeholder="Add directions"
-            className="p-2 border-gray-400 rounded-md outline-none bg-gray-50 w-max"
+            className="bg-gray-50 w-max p-2 border-gray-400 rounded-md outline-none"
             {...register("directions", { required: true })}
           />
           {errors.directions && <span>Directions is required.</span>}
@@ -206,6 +210,7 @@ export function RecipeForm({ recipe }) {
         </div>
 
         <input
+          id="recipe-submit"
           type="submit"
           className="px-4 py-2 text-lg font-bold border-4 border-gray-400 rounded-lg"
         />

@@ -18,15 +18,14 @@ export const RecipeCard = ({ recipe }) => {
         className="h-[250px] w-[250px]  bg-cover bg-center bg-no-repeat  rounded-t-3xl"
         style={{
           backgroundImage: `url(${recipe.image || "/fallback.png"})`,
-        }}
-      ></div>
-      <div className="flex flex-col p-3 text-white bg-black ">
+        }}></div>
+      <div className=" flex flex-col p-3 text-white bg-black">
         <div className="flex flex-row items-center justify-between">
           <div className="font-bold text-1xl w-[150px] break-words">
             {recipe.name}
           </div>
 
-          <div className="text-xs ">{recipe.cookTime}</div>
+          <div className=" text-xs">{recipe.cookTime}</div>
         </div>
 
         <div className="flex flex-row flex-wrap mt-4 text-sm text-left text-wrap w-[200px]">
@@ -37,7 +36,7 @@ export const RecipeCard = ({ recipe }) => {
         </div>
         <img
           src="/arrow.png"
-          className="h-[20px] self-end cursor-pointer"
+          className="h-[20px] self-end cursor-pointer recipe-select"
           onClick={() => {
             router.push(`/recipe/${recipe._id}`);
           }}

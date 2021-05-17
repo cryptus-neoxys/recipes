@@ -19,7 +19,9 @@ export default ({ user, recipes, error }) => {
           <div className="flex flex-row flex-wrap mb-6">
             {recipes &&
               recipes.map((recipe, key) => {
-                return <RecipeCard recipe={recipe} key={key} />;
+                return (
+                  <RecipeCard recipe={recipe} key={key} id={`recipe-${key}`} />
+                );
               })}
           </div>
         </div>
