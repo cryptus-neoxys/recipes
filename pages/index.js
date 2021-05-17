@@ -72,12 +72,15 @@ export default function Home() {
             />
           </div>
           <button
+            id="search-button"
             onClick={search}
             className="hover:bg-white hover:text-black hover:rounded-lg px-3 py-2 mx-3 font-bold text-white bg-black border border-black rounded-lg">
             SEARCH
           </button>
           <Link href="/recipe/new">
-            <button className="hover:bg-white hover:text-black hover:rounded-lg self-center px-3 py-2 mr-3 font-bold text-white bg-black border border-black rounded-lg">
+            <button
+              id="create-button"
+              className="hover:bg-white hover:text-black hover:rounded-lg self-center px-3 py-2 mr-3 font-bold text-white bg-black border border-black rounded-lg">
               CREATE
             </button>
           </Link>
@@ -103,7 +106,13 @@ export default function Home() {
         <div className="flex flex-row flex-wrap justify-center w-2/3 mb-6">
           {recipes &&
             recipes.map((recipe, key) => {
-              return <RecipeCard recipe={recipe} key={key} />;
+              return (
+                <RecipeCard
+                  recipe={recipe}
+                  key={key}
+                  id={`recipe-${key}-link`}
+                />
+              );
             })}
         </div>
       </div>
