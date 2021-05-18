@@ -1,21 +1,19 @@
 import { Layout } from "@components/Layout";
 import dbConnect from "../../utils/dbConnect";
 import Recipe from "../../models/Recipe";
-
+import Header from "@components/Header";
+import Recipes from "@components/Recipe";
+const sq = [
+  "Orange Juice",
+  "Soy Sauce",
+  "Lemon Juice",
+]
 export default ({ recipe }) => {
   console.log(recipe);
   return (
     <Layout title={recipe.name}>
-      <div className="p-3">
-        <div>
-          <h1 className="text-2xl">{recipe.name}</h1>
-          <img src={recipe.image} className="h-[300px]" />
-          <div>
-            <div>Method:</div>
-            <div>{recipe.directions.join(" ")}</div>
-          </div>
-        </div>
-      </div>
+       <Header/>
+      <Recipes recipe = {recipe} sq = {sq}/> 
     </Layout>
   );
 };
