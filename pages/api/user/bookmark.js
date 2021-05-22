@@ -12,24 +12,38 @@ export default async function handler(req, res) {
   switch (method) {
     case "POST": {
       try {
-        const body = JSON.parse(req.body);
+        let body = req.body;
+        if (typeof body !== "object") {
+          body = JSON.parse(req.body);
+        }
+        console.log(body);
 
         const { recipeId, email } = body;
 
-        const user = User.find({ email: email });
+        const user = await User.findOne({ email: email });
 
         if (!user) {
           return res.return(204).json({ success: false });
         }
 
-        user.update({ $push: { bookmarks: recipeId } });
+        console.log(user);
+        let recipeIndex = user.bookmarks.indexOf(recipeId);
+        if (recipeIndex !== -1) {
+          user.bookmarks.splice(recipeIndex, 1);
+        } else {
+          user.bookmarks.unshift(recipeId);
+        }
+        await user.save();
 
         return res.status(200).json({ success: true, data: user });
       } catch (err) {
         console.error(err);
+        return res
+          .return(500)
+          .json({ success: false, error: "Something went wrong" });
       }
     }
     default:
-      res.return(405).json({ success: false, message: "Bad Request" });
+      return res.status(405).json({ success: false, message: "Bad Request" });
   }
 }
