@@ -23,7 +23,7 @@ export default async function handler(req, res) {
         const user = await User.findOne({ email: email });
 
         if (!user) {
-          return res.return(204).json({ success: false });
+          return res.status(204).json({ success: false });
         }
 
         console.log(user);

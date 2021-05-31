@@ -3,8 +3,10 @@ import { RecipeCard } from "@components/RecipeCard";
 import dbConnect from "../../utils/dbConnect";
 import User from "./../../models/User";
 import Recipe from "../../models/Recipe";
+import { useSession } from "next-auth/client";
 
 export default ({ user, recipes, error }) => {
+  const [session, loading] = useSession();
   return error ? (
     <Layout>No such user</Layout>
   ) : (
@@ -23,7 +25,13 @@ export default ({ user, recipes, error }) => {
             {recipes &&
               recipes.map((recipe, key) => {
                 return (
-                  <RecipeCard recipe={recipe} key={key} id={`recipe-${key}`} />
+                  <RecipeCard
+                    recipe={recipe}
+                    key={key}
+                    id={`recipe-${key}-link`}
+                    bookmark={session?.user.bookmarks.indexOf(recipe._id)}
+                    email={session?.user.email}
+                  />
                 );
               })}
           </div>
@@ -36,9 +44,10 @@ export default ({ user, recipes, error }) => {
                 return (
                   <RecipeCard
                     recipe={recipe}
-                    bookmark={10}
                     key={key}
-                    id={`recipe-${key}`}
+                    id={`recipe-${key}-link`}
+                    bookmark={session?.user.bookmarks.indexOf(recipe._id)}
+                    email={session?.user.email}
                   />
                 );
               })}
