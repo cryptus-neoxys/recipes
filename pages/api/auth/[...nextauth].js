@@ -28,9 +28,9 @@ export default NextAuth({
       return baseUrl;
     },
     async session(session, user) {
-      session["user"]["_id"] = (await User.findOne({ email: user.email }))[
-        "_id"
-      ];
+      const fetcheduser = await User.findOne({ email: user.email });
+      session["user"]["_id"] = fetcheduser["_id"];
+      session["user"]["bookmarks"] = fetcheduser["bookmarks"];
       return session;
     },
     async jwt(token, user, account, profile, isNewUser) {
