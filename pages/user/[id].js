@@ -16,11 +16,30 @@ export default ({ user, recipes, error }) => {
           <div className="mt-4 text-xl">
             Recipes created by {user.email.split("@")[0]}:
           </div>
+          <h1 className="text-[#8D3F3F] font-medium text-5xl tracking-wider px-5 lg:pl-36 max-w-2xl mt-16 capitalize">
+            Your Recipes
+          </h1>
           <div className="flex flex-row flex-wrap mb-6">
             {recipes &&
               recipes.map((recipe, key) => {
                 return (
                   <RecipeCard recipe={recipe} key={key} id={`recipe-${key}`} />
+                );
+              })}
+          </div>
+          <h1 className="text-[#8D3F3F] font-medium text-5xl tracking-wider px-5 lg:pl-36 max-w-2xl mt-16 capitalize">
+            Bookmarked Recipes
+          </h1>
+          <div className="flex flex-row flex-wrap mb-6">
+            {user.bookmarks &&
+              user.bookmarks.map((recipe, key) => {
+                return (
+                  <RecipeCard
+                    recipe={recipe}
+                    bookmark={10}
+                    key={key}
+                    id={`recipe-${key}`}
+                  />
                 );
               })}
           </div>
@@ -32,7 +51,12 @@ export default ({ user, recipes, error }) => {
 
 export async function getServerSideProps(context) {
   await dbConnect();
-  let res = await User.findOne({ email: `${context.params.id}@gmail.com` });
+  let res = await User.findOne({
+    email: `${context.params.id}@gmail.com`,
+  }).populate({
+    path: "bookmarks",
+    populate: { path: "tags" },
+  });
   if (!res) {
     return {
       redirect: {
