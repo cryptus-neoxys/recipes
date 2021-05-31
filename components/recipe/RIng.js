@@ -9,7 +9,7 @@ function RIng({ recipe, sq }) {
       }
     }
     items.push(
-      <div className="flex space-x-2">
+      <div key={index} className="flex space-x-2">
         <img src={a} className="mr-5" />
         <p>{value.split(",")[0]}</p>
         <p className="text-[#AC5A2B] opacity-75">{value.split(",")[1]}</p>

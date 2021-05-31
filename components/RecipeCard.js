@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import React from "react";
-import { useState } from "react";
 
 const Tag = ({ ingredient }) => {
   return (
@@ -10,8 +9,25 @@ const Tag = ({ ingredient }) => {
   );
 };
 
-export const RecipeCard = ({ recipe, id }) => {
+export const RecipeCard = ({ recipe, id, bookmark, email }) => {
   const router = useRouter();
+
+  const handleBookmark = async () => {
+    console.log(email, bookmark, recipe._id);
+    if (email) {
+      const res = await fetch("/api/user/bookmark", {
+        body: JSON.stringify({
+          email: email,
+          recipeId: recipe._id,
+        }),
+        method: "POST",
+      });
+      console.log(res);
+    } else {
+      alert("Login to Bookmark");
+    }
+  };
+
   return (
     <div className="flex flex-col m-4">
       <div
@@ -42,6 +58,15 @@ export const RecipeCard = ({ recipe, id }) => {
             router.push(`/recipe/${recipe._id}`);
           }}
         />
+        <div>
+          <p onClick={() => handleBookmark()} className="cursor-pointer">
+            {email
+              ? bookmark === -1
+                ? "bookmark"
+                : "Bookmarked"
+              : "Login to Bookmark"}
+          </p>
+        </div>
       </div>
     </div>
   );

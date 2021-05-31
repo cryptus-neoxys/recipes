@@ -31,6 +31,7 @@ export default function Home() {
       });
       data = await data.json();
       console.log(data);
+      console.log(session, "Index");
       setRecipes(data.recipes);
     } catch (err) {
       console.log(err);
@@ -111,6 +112,8 @@ export default function Home() {
                   recipe={recipe}
                   key={key}
                   id={`recipe-${key}-link`}
+                  bookmark={session?.user.bookmarks.indexOf(recipe._id)}
+                  email={session?.user.email}
                 />
               );
             })}

@@ -6,12 +6,11 @@ import Rplayer from "./recipe/Rplayer";
 function Recipes({ recipe, sq }) {
   return (
     <div>
-      <RHead str={recipe?.video} />
+      <RHead str={recipe.name} />
       <div className="xl:flex justify-between">
-        <Rplayer str={recipe.image} />
+        <Rplayer str={recipe.image} directions={recipe.directions} />
         <RIng recipe={recipe} sq={sq} />
       </div>
-      <RMethod meth={recipe.directions} />
     </div>
   );
 }
