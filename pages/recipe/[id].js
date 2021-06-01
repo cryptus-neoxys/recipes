@@ -3,17 +3,13 @@ import dbConnect from "../../utils/dbConnect";
 import Recipe from "../../models/Recipe";
 import Header from "@components/Header";
 import Recipes from "@components/Recipe";
-const sq = [
-  "Orange Juice",
-  "Soy Sauce",
-  "Lemon Juice",
-]
+const sq = ["Orange Juice", "Soy Sauce", "Lemon Juice"];
 export default ({ recipe }) => {
   console.log(recipe);
   return (
     <Layout title={recipe.name}>
-       <Header/>
-      <Recipes recipe = {recipe} sq = {sq}/> 
+      {/* <Header/> */}
+      <Recipes recipe={recipe} sq={sq} />
     </Layout>
   );
 };
